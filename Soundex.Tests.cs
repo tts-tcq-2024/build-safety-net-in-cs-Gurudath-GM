@@ -5,7 +5,7 @@ public class SoundexTests
     [Fact]
     public void HandlesEmptyString()
     {
-        Assert.Equal(string.Empty, Soundex.GenerateSoundex(""));
+        Assert.Equal(Soundex.GenerateSoundex("")), string.Empty);
     }
 
     [Fact]
