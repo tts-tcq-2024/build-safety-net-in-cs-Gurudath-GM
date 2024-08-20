@@ -3,17 +3,6 @@ using System.Text;
 
 public class Soundex
 {
-    private static readonly Dictionary<char, char> SoundexCodeMap = new Dictionary<char, char>
-    {
-        { 'B', '1' }, { 'F', '1' }, { 'P', '1' }, { 'V', '1' },
-        { 'C', '2' }, { 'G', '2' }, { 'J', '2' }, { 'K', '2' },
-        { 'Q', '2' }, { 'S', '2' }, { 'X', '2' }, { 'Z', '2' },
-        { 'D', '3' }, { 'T', '3' },
-        { 'L', '4' },
-        { 'M', '5' }, { 'N', '5' },
-        { 'R', '6' }
-    };
-
     private static void SoundexCodeAppend(StringBuilder soundex, char value)
     {
         soundex.Append(char.ToUpper(value));
@@ -21,7 +10,7 @@ public class Soundex
 
     private static void GetSoundexCodeProcess(StringBuilder soundex, string name)
     {
-        char prevCode = GetSoundexCode(name[0]);
+        char prevCode = SoundexConstants.CodeMap(name[0]);
 
         foreach (var c in name.Skip(1))
         {
@@ -33,7 +22,7 @@ public class Soundex
 
     private static void AppendValidCode(StringBuilder soundex, char c, ref char prevCode)
     {
-        char code = GetSoundexCode(c);
+        char code = SoundexConstants.CodeMap(c);
         if (CheckForValidCode(code, prevCode))
         {
             soundex.Append(code);
@@ -53,11 +42,13 @@ public class Soundex
             soundex.Append('0');
         }
     }
+    
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
         return SoundexCodeMap.ContainsKey(c) ? SoundexCodeMap[c] : '0';
     }
+    
     public static string GenerateSoundex(string name)
     {
         if (string.IsNullOrEmpty(name))
@@ -68,9 +59,7 @@ public class Soundex
         StringBuilder soundex = new StringBuilder();
         SoundexCodeAppend(soundex, name[0]);
         GetSoundexCodeProcess(soundex, name);
-
         checkingsoundex(soundex);
-
         return soundex.ToString();
     }
 }
