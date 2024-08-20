@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Soundex
 {
+    private static SoundexConstants soundexConstants;
     private static void SoundexCodeAppend(StringBuilder soundex, char value)
     {
         soundex.Append(char.ToUpper(value));
@@ -12,7 +13,7 @@ public class Soundex
 
     private static void GetSoundexCodeProcess(StringBuilder soundex, string name)
     {
-        char prevCode = SoundexConstants.CodeMap(name[0]);
+        char prevCode = soundexConstants.CodeMap(name[0]);
 
         foreach (var c in name.Skip(1))
         {
@@ -24,7 +25,7 @@ public class Soundex
 
     private static void AppendValidCode(StringBuilder soundex, char c, ref char prevCode)
     {
-        char code = SoundexConstants.CodeMap(c);
+        char code = soundexConstants.CodeMap(c);
         if (CheckForValidCode(code, prevCode))
         {
             soundex.Append(code);
@@ -48,7 +49,7 @@ public class Soundex
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
-        return SoundexConstants.CodeMap.ContainsKey(c) ? SoundexConstants.CodeMap[c] : '0';
+        return soundexConstants.CodeMap.ContainsKey(c) ? soundexConstants.CodeMap[c] : '0';
     }
     
     public static string GenerateSoundex(string name)
@@ -58,6 +59,7 @@ public class Soundex
             return string.Empty;
         }
 
+        soundexConstants = new SoundexConstants();
         StringBuilder soundex = new StringBuilder();
         SoundexCodeAppend(soundex, name[0]);
         GetSoundexCodeProcess(soundex, name);
