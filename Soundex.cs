@@ -10,7 +10,7 @@ public class Soundex
 
     private static void GetSoundexCodeProcess(StringBuilder soundex, string name)
     {
-        char prevCode = SoundexConstants.CodeMap(name[0]);
+        char prevCode = CodeMap(name[0]);
 
         foreach (var c in name.Skip(1))
         {
@@ -22,7 +22,7 @@ public class Soundex
 
     private static void AppendValidCode(StringBuilder soundex, char c, ref char prevCode)
     {
-        char code = SoundexConstants.CodeMap(c);
+        char code = CodeMap(c);
         if (CheckForValidCode(code, prevCode))
         {
             soundex.Append(code);
@@ -46,7 +46,7 @@ public class Soundex
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
-        return SoundexCodeMap.ContainsKey(c) ? SoundexCodeMap[c] : '0';
+        return CodeMap.ContainsKey(c) ? CodeMap[c] : '0';
     }
     
     public static string GenerateSoundex(string name)
