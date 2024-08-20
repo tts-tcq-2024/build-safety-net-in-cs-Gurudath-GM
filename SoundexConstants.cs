@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 public static class SoundexConstants
 {
     public static readonly Dictionary<char, char> CodeMap = new Dictionary<char, char>
