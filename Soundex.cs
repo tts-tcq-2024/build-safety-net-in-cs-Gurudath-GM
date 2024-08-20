@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Soundex
 {
-    private static SoundexConstants soundexConstants;
+    private SoundexConstants soundexConstants;
     private static void SoundexCodeAppend(StringBuilder soundex, char value)
     {
         soundex.Append(char.ToUpper(value));
